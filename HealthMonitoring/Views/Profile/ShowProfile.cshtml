@@ -1,0 +1,92 @@
+﻿@model HealthMonitoring.Models.User
+@{
+    ViewBag.Title = "ShowProfile";
+    @Styles.Render("~/Content/ProfileStyle")
+}
+
+<h2>Profile Information</h2>
+
+<div class="card mb-3">
+    <div class="card-body">
+
+        <div class="row">
+            <div class="col-sm-3">
+                <h6 class="mb-0">Full Name</h6>
+            </div>
+            <div class="col-sm-9 text-secondary">
+                @Model.Name
+            </div>
+        </div>
+
+        <hr>
+
+        <div class="row">
+            <div class="col-sm-3">
+                <h6 class="mb-0">Email</h6>
+            </div>
+            <div class="col-sm-9 text-secondary">
+                @Model.Email
+            </div>
+        </div>
+
+        <hr>
+
+        @if (Model.DateOfBirth.ToString("dd-mm-yyyy") != "01-00-1900")
+        {
+            <div class="row">
+                <div class="col-sm-3">
+                    <h6 class="mb-0">Age</h6>
+                </div>
+                <div class="col-sm-9 text-secondary">
+
+                    @if (ViewBag.age != null)
+                    {
+                        @ViewBag.age
+                    }
+                    else
+                    {
+                        @Model.DateOfBirth.ToString("dd-mm-yyyy")
+
+                    }
+
+                </div>
+            </div>
+            <hr />
+        }
+
+
+
+        @*<div class="row">
+            <div class="col-sm-3">
+                <h6 class="mb-0">Age</h6>
+            </div>
+            <div class="col-sm-9 text-secondary">
+                @Model.Age
+            </div>
+        </div>*@
+
+        <hr>
+
+        <div class="row">
+            <div class="col-sm-3">
+                <h6 class="mb-0">Type of User</h6>
+            </div>
+            <div class="col-sm-9 text-secondary">
+                @Model.Role
+            </div>
+        </div>
+
+        <hr>
+
+        @*<div class="row">
+            <div class="col-sm-3">
+                <h6 class="mb-0">Address</h6>
+            </div>
+            <div class="col-sm-9 text-secondary">
+                Bay Area, San Francisco, CA
+            </div>
+        </div>*@
+
+
+    </div>
+</div>

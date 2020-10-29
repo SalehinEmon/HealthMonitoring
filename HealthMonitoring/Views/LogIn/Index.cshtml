@@ -1,0 +1,86 @@
+﻿@{
+    Layout = null;
+}
+
+@*<h2>Log In Form</h2>
+
+    @if (ViewBag.msg != null)
+    {
+        <h3>@ViewBag.msg</h3>
+    }
+
+    @if (HealthMonitoring.Manager.SessionManager.GetUserSession() == null)
+    {
+        using (Html.BeginForm(null, null, FormMethod.Post))
+        {
+            <div class="form-group">
+
+                @Html.Label("email", "Enter Your Email")
+                @Html.TextBox("email", null, new { @class = "form-control", type = "email" })
+                @Html.ValidationMessage("email", new { @class = "error" })
+            </div>
+
+            <div class="form-group">
+
+                @Html.Label("password", "Enter Your Password")
+                @Html.TextBox("password", null, new { @class = "form-control", type = "password" })
+                @Html.ValidationMessage("password", new { @class = "error" })
+            </div>
+
+            <input type="submit" class="btn btn-success" value="Log In" />
+        }
+
+    }*@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Health Monitoring System Login</title>
+
+    @Styles.Render("~/Content/css")
+    @Styles.Render("~/bundles/jqueryui/css")
+    @Scripts.Render("~/bundles/modernizr")
+    @Styles.Render("~/Content/LoginStyle")
+</head>
+<body>
+
+    <div class="wrapper fadeInDown">
+        <div id="formContent">
+            <!-- Tabs Titles -->
+            <!-- Icon -->
+            <div class="fadeIn first">
+                <h1>Log In</h1>
+            </div>
+
+            <!-- Login Form -->
+            @if (HealthMonitoring.Manager.SessionManager.GetUserSession() == null)
+            {
+                using (Html.BeginForm(null, null, FormMethod.Post))
+                {
+
+                    @Html.TextBox("email", null, new { @class = "fadeIn second", type = "email", placeholder = "E-Mail" })
+                    @Html.ValidationMessage("email", new { @class = "error" })
+
+                    @Html.TextBox("password", null, new { @class = "fadeIn third", type = "password", placeholder = "Password" })
+                    @Html.ValidationMessage("password", new { @class = "error" })
+
+                    <input type="submit" class="fadeIn fourth" value="Log In">
+                }
+            }
+
+            <!-- Remind Passowrd -->
+
+            @if (ViewBag.msg != null)
+            {
+
+                <div id="formFooter">
+                    <strong style="color:red">Wrong Password or Email!!!</strong>
+                </div>
+
+            }
+        </div>
+    </div>
+</body>
+</html>

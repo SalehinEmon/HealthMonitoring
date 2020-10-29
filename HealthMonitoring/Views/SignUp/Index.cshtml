@@ -1,0 +1,76 @@
+﻿@model HealthMonitoring.Models.User
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>New Sign Up form</h2>
+
+@if (ViewBag.msg != null)
+{
+    <h3>@ViewBag.msg</h3>
+
+}
+
+@using (Html.BeginForm(null, null, FormMethod.Post))
+{
+    <div class="form-group">
+        @Html.LabelFor(m => m.Name, "Enter your name : ")
+        @Html.TextBoxFor(m => m.Name, null, new { @class = "form-control" })
+        <strong>@Html.ValidationMessageFor(m => m.Name, null, new { @class = "error" })</strong>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.Email, "Enter your Email : ")
+        @Html.TextBoxFor(m => m.Email, null, new { @class = "form-control", type = "email" })
+        <strong>@Html.ValidationMessageFor(m => m.Email, null, new { @class = "error" })</strong>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.Age, "Enter your age : ")
+        @Html.TextBoxFor(m => m.Age, null, new { @class = "form-control" })
+        <strong>@Html.ValidationMessageFor(m => m.Age, null, new { @class = "error" })</strong>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.Role, "Enter your role : ")
+        @Html.DropDownListFor(m => m.Role, new SelectList(ViewBag.userRoleType, "Value", "Text"), new { @class = "form-control" })
+        <strong>@Html.ValidationMessageFor(m => m.Role, null, new { @class = "error" })</strong>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.Password, "Enter your password : ")
+        @Html.TextBoxFor(m => m.Password, null, new { @class = "form-control", type = "password" })
+        <strong>@Html.ValidationMessageFor(m => m.Password, null, new { @class = "error" })</strong>
+    </div>
+
+    <div>
+        @Html.LabelFor(m => m.DateOfBirth, "Enter your date of Birth")
+        @Html.TextBoxFor(m => m.DateOfBirth, null, new { @class = "form-control", type = "text" })
+        <strong>@Html.ValidationMessageFor(m => m.DateOfBirth, null, new { @class = "error" })</strong>
+    </div>
+
+    <br />
+
+    <input type="submit" value="Create New User" class="btn btn-success" />
+}
+
+
+
+@section scripts
+{
+    <script>
+
+        var currentYear = new Date().getFullYear;
+
+        $(function () {
+            $("#DateOfBirth").datepicker({
+                changeMonth: true,
+                changeYear: true,
+                dateFormat: 'mm-dd-yy',
+                yearRange: "1900:" + currentYear
+
+            }).datepicker("setDate", new Date());
+        });
+
+
+    </script>
+
+}

@@ -1,0 +1,38 @@
+﻿
+@{
+    ViewBag.Title = "Edit Your Profile";
+}
+
+<h2>Edit Your Profile</h2>
+
+@if(ViewBag.msg != null)
+{
+    <h4>@ViewBag.msg</h4>
+}
+
+@using (Html.BeginForm(null, null, FormMethod.Post))
+{
+    <div class="form-group">
+        @Html.Label("oldpassword", "Enter your old password : ")
+        @Html.TextBox("oldpassword", null, new { @class = "form-control", type = "password" })
+
+    </div>
+
+    <div class="form-group">
+        @Html.Label("newpassword", "Enter your new password : ")
+        @Html.TextBox("newpassword", null, new { @class = "form-control", type = "password" })
+
+    </div>
+
+    <div class="form-group">
+        @Html.Label("newpasswordagain", "Enter your new password again: ")
+        @Html.TextBox("newpasswordagain", null, new { @class = "form-control", type = "password" })
+
+    </div>
+
+
+    <input type="submit" value="Update" class="btn btn-success" />
+
+
+
+}

@@ -1,0 +1,56 @@
+﻿@model HealthMonitoring.Models.EntryViewModel
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Add New Entry</h2>
+
+@if(ViewBag.msg != null)
+{
+    <h4>@ViewBag.msg</h4>
+}
+
+@using (Html.BeginForm(null, null, FormMethod.Post))
+{
+
+    <div class="form-group">
+        @Html.LabelFor(entry => entry.Entry.Value, "Enter Value:")
+        @Html.TextBoxFor(entry => entry.Entry.Value, new { @class = "form-control" , Value = " "})
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(entry => entry.Entry.Value, "Select Value type :")
+        @Html.DropDownListFor(entry => entry.Entry.TypeOfEntry, Model.AllItems, new { @class = "form-control" })
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(entry => entry.Entry.DateOfEntry, "Enter Value:")
+        @Html.TextBoxFor(entry => entry.Entry.DateOfEntry, new { @class = "form-control" })
+    </div>
+
+
+    <input type="submit" value="Add new Value" class="btn btn-success"/>
+
+}
+
+
+@section scripts
+{
+    <script>
+
+
+        $(function () {
+            $("#Entry_DateOfEntry").datepicker({
+                @*defaultDate: +0,
+                dayNamesMin: ["রবি", "সোম", "মঙ্গল", "বুধ", "বৃহস্পতি", "শুক্র", "শনি"],*@
+                changeMonth: true,
+                changeYear: true,
+                dateFormat: 'mm-dd-yy'
+                
+            }).datepicker("setDate", new Date());
+        });
+        
+    </script>
+
+}

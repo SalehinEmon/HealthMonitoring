@@ -1,0 +1,128 @@
+﻿@model List<HealthMonitoring.Models.Entry>
+@{
+    ViewBag.Title = "Show Chart";
+}
+@section ExtraInclude
+{
+    @Styles.Render("~/Content/ChartJs")
+    @Scripts.Render("~/Scripts/chartjs")
+}
+
+<h2>Show Chart</h2>
+
+
+@using (Html.BeginForm(null, null, FormMethod.Post))
+{
+    <div class="form-row">
+        <div class="form-group col-md-3">
+
+            @Html.Label("TypeOfEntry", "Entry Type")
+            @Html.DropDownList("TypeOfEntry", new SelectList(ViewBag.typeOfEntryDropdown, "Value", "Text"), new { @class = "form-control", placeholder = "Type of entry" })
+
+
+        </div>
+        <div class="form-group col-md-3">
+
+            @Html.Label("FromeDate", "From date")
+            @Html.TextBox("FromeDate", null, new { @class = "form-control", placeholder = "Form date" })
+        </div>
+        <div class="form-group col-md-3">
+
+            @Html.Label("ToDate", "To date")
+            @Html.TextBox("ToDate", null, new { @class = "form-control", placeholder = "To date" })
+        </div>
+
+        <br />
+
+        <input type="submit" class="btn btn-warning mb-2" value="Search" />
+
+
+    </div>
+
+
+}
+
+<br>
+
+@if (ViewBag.NameOfEntry != null)
+{
+    <canvas id="HealthChart" width="600" height="400"></canvas>
+
+
+
+}
+
+
+
+
+@section scripts
+{
+    <script>
+
+        $(function () {
+            $("#FromeDate").datepicker({
+                changeMonth: true,
+                changeYear: true,
+                dateFormat: 'mm-dd-yy'
+
+            }).datepicker("setDate", new Date());
+        });
+
+        $(function () {
+            $("#ToDate").datepicker({
+                changeMonth: true,
+                changeYear: true,
+                dateFormat: 'mm-dd-yy'
+
+            }).datepicker("setDate", new Date());
+        });
+
+
+        var ctx = document.getElementById('HealthChart').getContext('2d');
+
+        var chart = new Chart(ctx, {
+            // The type of chart we want to create
+            type: 'line',
+
+
+            // The data for our dataset
+            data: {
+                labels: [
+                    @foreach (HealthMonitoring.Models.Entry entry in Model)
+
+                    {
+                        @*@entry.DateOfEntry;*@
+                        @Html.Raw("\""+entry.DateOfEntry.ToString("d-MMM-yyyy")+"\""+",");
+
+                    }
+                ],
+                datasets: [{
+                    label: "@ViewBag.NameOfEntry",
+                    lineTension: 0,
+                    responsive: true,
+                    backgroundColor: 'rgb(255, 99, 132)',
+                    borderColor: 'rgb(255, 99, 132)',
+                    fill: false,
+                    data: [
+                   @foreach (HealthMonitoring.Models.Entry entry in Model)
+
+                    {
+                        @*@entry.Value;*@
+                        @Html.Raw(entry.Value+",");
+
+                    }
+                    ]
+                }]
+            },
+
+            // Configuration options go here
+            options: {
+                responsive: false,
+                maintainAspectRatio: true,
+                showScale: false
+            }
+        });
+    </script>
+
+}
+

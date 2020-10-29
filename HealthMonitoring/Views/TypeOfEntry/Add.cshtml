@@ -1,0 +1,37 @@
+﻿@model HealthMonitoring.Models.TypeOfEntry
+
+@{
+    ViewBag.Title = "Add";
+}
+
+<h2>Add new type</h2>
+
+@if (ViewBag.msg != null)
+{
+    if (ViewBag.msg == "Successful")
+    {
+        <div class="alert alert-success">
+
+            <strong>Successfully added new type</strong>
+        </div>
+    }
+    else if(ViewBag.msg == "Failed" || ViewBag.msg == "Empty string is not allowed")
+    {
+        <div class="alert alert-danger">
+
+            <strong>Failed to add new type</strong>
+        </div>
+
+    }
+}
+
+@using (Html.BeginForm(null, null, FormMethod.Post))
+{
+    <div class="form-group">
+        @Html.LabelFor(type => type.Name,"Enter type name:")
+        @Html.TextBoxFor(type => type.Name,null,new { @class="form-control"})
+        @Html.ValidationMessageFor(type => type.Name)
+    </div>
+
+    <input type="submit" value="Add new type" class="btn btn-success" />
+}

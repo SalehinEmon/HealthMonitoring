@@ -1,0 +1,92 @@
+﻿@{
+    HealthMonitoring.Models.User loggedInUser = HealthMonitoring.Manager.SessionManager.GetUserSession();
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title</title>
+
+    @Styles.Render("~/Content/css")
+    @Styles.Render("~/bundles/jqueryui/css")
+    @*@Scripts.Render("~/bundles/modernizr")*@
+    @RenderSection("ExtraInclude", required: false)
+</head>
+<body>
+
+    <nav class="navbar navbar-default">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+
+                <a class="navbar-brand" href="/">Health Monitoring</a>
+            </div>
+
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav">
+
+                    @*<li>@Html.ActionLink("Log In", "Index", "LogIn")</li>*@
+                    @*<li>@Html.ActionLink("Log Out", "Index", "LogOut")</li>*@
+
+                    <li>@Html.ActionLink("Show all Value", "Index", "allentry")</li>
+                    <li>@Html.ActionLink("Add New Value", "Index", "AddEntry")</li>
+                    <li>@Html.ActionLink("Show Chart", "Index", "Chart")</li>
+
+                    @if (loggedInUser != null)
+                    {
+                        if (loggedInUser.Role == "admin")
+                        {
+
+                            <li>@Html.ActionLink("Add New User", "Index", "SignUp")</li>
+                            <li>@Html.ActionLink("Add New Value Type", "add", "TypeOfEntry")</li>
+                        }
+
+                    }
+
+                    @*<li class="active"><a href="#">Link two</a></li>*@
+                </ul>
+
+                @if (loggedInUser != null)
+                {
+                    <ul class="nav navbar-nav navbar-right">
+
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">@loggedInUser.Name <span class="caret"></span></a>
+                            <ul class="dropdown-menu" role="menu">
+                                <li>@Html.ActionLink("Profile", "ShowProfile", "Profile")</li>
+                                @*<li><a href="#">Another action</a></li>
+                                <li><a href="#">Something else here</a></li>*@
+                                <li class="divider"></li>
+                                <li>@Html.ActionLink("Cahnage Password", "Index", "ChangePass")</li>
+                                <li class="divider"></li>
+                                <li>@Html.ActionLink("Log Out", "Index", "LogOut")</li>
+                            </ul>
+                        </li>
+                    </ul>
+
+                }
+            </div>
+        </div>
+    </nav>
+
+    <div class="container body-content">
+        @RenderBody()
+        <hr />
+        <footer>
+            <p>&copy; @DateTime.Now.Year - Golam Salehin</p>
+        </footer>
+    </div>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @Scripts.Render("~/bundles/jqueryui")
+    @RenderSection("scripts", required: false)
+</body>
+</html>
